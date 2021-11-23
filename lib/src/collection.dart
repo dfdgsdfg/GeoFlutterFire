@@ -103,9 +103,11 @@ class GeoFireCollectionRef {
     var filtered = mergedObservable.map((List<DistanceDocSnapshot> list) {
       var mappedList = list.map((DistanceDocSnapshot distanceDocSnapshot) {
         // split and fetch geoPoint from the nested Map
-        final fieldList = field.split('.');
-        var geoPointField =
-            distanceDocSnapshot.documentSnapshot.data()[fieldList[0]];
+        final List<String> fieldList = field.split('.');
+        // var geoPointField =
+        //     distanceDocSnapshot.documentSnapshot.data()[fieldList[0]];
+        final Map data = distanceDocSnapshot.documentSnapshot.data();
+        var geoPointField = data[fieldList[0]];
         if (fieldList.length > 1) {
           for (int i = 1; i < fieldList.length; i++) {
             geoPointField = geoPointField[fieldList[i]];
